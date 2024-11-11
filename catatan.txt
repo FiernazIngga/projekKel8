@@ -1,2 +1,7 @@
 percobaan text
+<<<<<<< HEAD
 retyhan wangasf
+=======
+anjay hisyam
+pun10
+>>>>>>> 0a85e17635c1f53cf50c34d8ac25bd9a8e233ca4
