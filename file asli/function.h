@@ -4,8 +4,8 @@
 // user[][] = {nama ,nim, fakultas, email, password, buku 1, buku 2, buku 3}
 
 string user[max][8];
-string nama ,nim, fakultas, password, email, fakul, genreBuku, negaraBuku;
-char pass[100], ulang, kembali_anggota;
+string nama ,nim, fakultas, password, email, fakul, genreBuku, negaraBuku, pass;
+char ulang, kembali_anggota;
 int login, pengguna = 0, daftaruser=0;
 
 
@@ -41,8 +41,8 @@ void daftar(){
         }
         ulang = 'n';
 		cout << "Masukkan Password Bebas                  : ";
-		cin.getline(pass,sizeof(pass));
-		if (strlen(pass) >= 8)
+		getline(cin,pass);
+		if (pass.length() > 8)
 		{
 			user[daftaruser][0] = nama;
 			user[daftaruser][1] = nim;
