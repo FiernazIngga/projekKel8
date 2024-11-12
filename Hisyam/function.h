@@ -285,7 +285,7 @@ void ubahdatabuku(){
 	int jumlahbuku = hitungbuku();
 	string bukunew, penulisbaru, penerbitbaru, tahunterbitbaru, genrebaru, asalbaru;
 	char inginlihat, kondisi;
-	int ubahdata, nobuku;
+	int ubahdata, nobuku, ketersediaan;
     cout << "Data apa yang ingin anda ubah : \n";
     cout << "1. Judul Buku \n"
     << "2. Penulis\n"
@@ -450,6 +450,19 @@ void ubahdatabuku(){
 			
 			cout<< "\nMasukan Asal buku baru yang ingin anda buat: ";getline(cin, asalbaru);
 			buku[jumlahbuku][5] = asalbaru;
+
+			cout<< "\nMasukan apakah buku tersedia(1) atau tidak(2) : ";cin>>ketersediaan;
+			if (ketersediaan = 1)
+			{
+				buku[jumlahbuku][6] = "Tersedia";
+			}
+			else if (ketersediaan = 2)
+			{
+				buku[jumlahbuku][6] = "Tidak Tersedia";
+			}
+			else{
+				cout << "Masukan yang benar ";
+			}
 			
 			nobuku++;
 			}
