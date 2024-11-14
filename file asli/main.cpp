@@ -110,7 +110,7 @@ int main() {
 					kembali_anggota = 'n','N';
 					system("cls");
 					cout << "Selamat datang" << user[pengguna][0] << endl;
-					cout << "1. Tampilkan Buku \n2. Pinjam Buku \n3. Kembalikan Buku \n4. Keterangan anda \n5. Logout" << endl;
+					cout << "1. Ubah Data Buku\n2. Tampilkan Buku \n3. Pinjam Buku \n4. Kembalikan Buku \n5. Keterangan anda \n6. Logout" << endl;
 					cout << "Masukkan pilihan anda (isikan pilihan anda dengan memasukkan angka 1/2/3/4/5) : ";
 					cin >> pilihan2;
 					switch (pilihan2)
@@ -128,7 +128,7 @@ int main() {
 						do
 						{
 							system("cls");
-							pinjam();
+							cetakSemuaBuku();
 							cout << "Apakah anda ingin kembali? y / n : ";
 							cin >> kembali_anggota;
 						} while (kembali_anggota == 'n' || kembali_anggota == 'N');
@@ -137,12 +137,21 @@ int main() {
 						do
 						{
 							system("cls");
-							cout << "kembalikan" << endl;
+							pinjam();
 							cout << "Apakah anda ingin kembali? y / n : ";
 							cin >> kembali_anggota;
 						} while (kembali_anggota == 'n' || kembali_anggota == 'N');
 						break;
 					case '4':
+						do
+						{
+							system("cls");
+							cout << "kembalikan" << endl;
+							cout << "Apakah anda ingin kembali? y / n : ";
+							cin >> kembali_anggota;
+						} while (kembali_anggota == 'n' || kembali_anggota == 'N');
+						break;
+					case '5':
 						do
 						{
 							system("cls");
@@ -163,7 +172,7 @@ int main() {
 							cin >> kembali_anggota;
 						} while (kembali_anggota == 'n' || kembali_anggota == 'N');
 						break;
-					case '5':
+					case '6':
 						logout2 = 'n';
 						system("cls");
 						cout << "Apakah anda yakin ingin logout? y / n : ";
