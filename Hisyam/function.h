@@ -6,9 +6,19 @@
 string user[max][8];
 string nama ,nim, fakultas, password, email, fakul, genreBuku, negaraBuku, pass;
 char ulang, kembali_anggota;
-int login, pengguna = 0, daftaruser=0;
+int login, pengguna = 0, daftaruser=0, jmlBuku;
 
-
+int hitungJumlahBuku(){
+	jmlBuku = 0;
+	for (int i = 0; i < 100; i++)
+	{
+		if (!buku[i][0].empty())
+		{
+			jmlBuku++;
+		}
+	}
+	return jmlBuku;
+}
 
 void daftar(){
 	system("cls");
@@ -241,7 +251,7 @@ void cetakSemuaBuku(){
 		cout << "NO |  Judul Buku                                             | Tahun   | Genre                | Negara        | Tersedia  |" << endl;
 		cout << setw(124) << setfill('-') << "-" << endl;  
 		cout << setfill(' ');
-		for (int i = 0; i < maxBuku; i++)
+		for (int i = 0; i < hitungJumlahBuku(); i++)
 		{      
 				cout <<setw(2)<<setfill(' ') << i + 1 << " | "
 							<< setw(55) << left << buku[i][0] << " | "
@@ -307,6 +317,7 @@ void ubahdatabuku(){
 			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
 			cout << "Apakah ini judul buku yang ingin anda ubah : "<<buku[nobuku-1][0];
 			cout << "\nJika ya tekan y ";cin>>kondisi;
+			cin.ignore();
 			if (kondisi == 'y' || kondisi == 'Y')
 			{
 			cout <<	"Masukan judul buku baru yang ingin : ";getline(cin, bukunew);
@@ -328,6 +339,7 @@ void ubahdatabuku(){
 			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
 			cout << "Apakah ini nama penulis buku yang ingin anda ubah : "<<buku[nobuku-1][1];
 			cout << "\nJika ya tekan y ";cin>>kondisi;
+			cin.ignore();
 			if (kondisi == 'y' || kondisi == 'Y')
 			{
 			cout<< "Masukan Penulis buku baru yang ingin : ";getline(cin, penulisbaru);
@@ -348,6 +360,7 @@ void ubahdatabuku(){
 			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
 			cout << "Apakah ini nama penerbit buku yang ingin anda ubah : "<<buku[nobuku-1][2];
 			cout << "\nJika ya tekan y ";cin>>kondisi;
+			cin.ignore();
 			if (kondisi == 'y' || kondisi == 'Y')
 			{
 			cout<< "Masukan Penerbit buku baru yang ingin : ";getline(cin, penerbitbaru);
@@ -368,6 +381,7 @@ void ubahdatabuku(){
 			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
 			cout << "Apakah ini tahun terbit buku yang ingin anda ubah : "<<buku[nobuku-1][3];
 			cout << "\nJika ya tekan y ";cin>>kondisi;
+			cin.ignore();
 			if (kondisi == 'y' || kondisi == 'Y')
 			{
 			cout<< "Masukan tahun terbit buku baru yang ingin : ";getline(cin, tahunterbitbaru);
@@ -388,6 +402,7 @@ void ubahdatabuku(){
 			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
 			cout << "Apakah ini genre buku yang ingin anda ubah : "<<buku[nobuku-1][4];
 			cout << "\nJika ya tekan y ";cin>>kondisi;
+			cin.ignore();
 			if (kondisi == 'y' || kondisi == 'Y')
 			{
 			cout<< "Masukan genre buku baru yang ingin : ";getline(cin, genrebaru);
@@ -408,6 +423,7 @@ void ubahdatabuku(){
 			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
 			cout << "Apakah ini asal buku yang ingin anda ubah : "<<buku[nobuku-1][5];
 			cout << "\nJika ya tekan y ";cin>>kondisi;
+			cin.ignore();
 			if (kondisi == 'y' || kondisi == 'Y')
 			{
 			cout<< "Masukan Asal buku baru yang ingin : ";getline(cin, asalbaru);
@@ -428,6 +444,7 @@ void ubahdatabuku(){
 		else{
 		cout << "Apakah anda ingin menambah daftar buku : "
 		<<"\nJika ya tekan y ";cin>>kondisi;
+		cin.ignore();
 		cin.ignore();
 		
 		if (kondisi == 'y' || kondisi == 'Y')
@@ -480,6 +497,7 @@ void ubahdatabuku(){
 			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
 			cout << "Apakah ini buku yang ingin anda hapus : "<<buku[nobuku-1][0];
 			cout << "\nJika ya tekan y ";cin>>kondisi;
+			cin.ignore();
 			if (kondisi == 'y' || kondisi == 'Y')
 			{
 				for (int i = 0; i < 9; i++)
