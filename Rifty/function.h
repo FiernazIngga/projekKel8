@@ -6,18 +6,30 @@
 string user[max][8];
 string nama ,nim, fakultas, password, email, fakul, genreBuku, negaraBuku, pass;
 char ulang, kembali_anggota;
-int login, pengguna = 0, daftaruser=0, jmlBuku;
+int login, pengguna = 0, daftaruser=0, jmlBuku, jmlpeminjam;
 
 int hitungJumlahBuku(){
 	jmlBuku = 0;
 	for (int i = 0; i < 100; i++)
 	{
-		if (!buku[i][0].empty())
+		if (!buku[i][0].empty()) 
 		{
 			jmlBuku++;
 		}
 	}
 	return jmlBuku;
+}
+
+int hitungJumlahPeminjam(){
+	jmlpeminjam = 0;
+	for (int i = 0; i < 100; i++)
+	{
+		if (!user[i][0].empty())
+		{
+			jmlpeminjam++;
+		}
+	}
+	return jmlpeminjam;
 }
 
 void daftar(){
@@ -157,7 +169,7 @@ void bacaBuku(){
 	{
 		bacaBukuLain = 'n';
 			system("cls");
-			cout << "Semua buku yang telah anda pinjam" << endl << endl;
+			cout << "Semua buku yang telah anda pinjam" << endl;
 			for (int i = 5; i < 8; i++)
 			{
 				if (!user[pengguna][i].empty())
@@ -284,10 +296,8 @@ int hitungbuku(){
 		else{
 			break;
 		}
-		
 	}
 	return count;
-	
 }
 
 void ubahdatabuku(){
@@ -326,8 +336,6 @@ void ubahdatabuku(){
 			else{
 
 			}
-			
-			
 		}
 		break;
 
@@ -511,8 +519,168 @@ void ubahdatabuku(){
 			}
 		}
 		break;
-		
-
-		}}
+		}
+	}
 }
 	
+void tampilpeminjam(){
+	char kembali;
+	do
+	{
+		kembali = 'n';
+		system("cls");
+		cout << "Daftar peminjam yang terdapat di Perpustakaan IF-C" << endl;
+		cout << setw(326) << setfill('=') << "" << endl;
+		cout << setfill(' ');
+		cout << "NO | Nama Peminjam             | NIM       | Fakultas | Email                               | Password    | Judul 1                                                 | Judul 2                                                 | Judul 3                                                  |" << endl;
+		cout << setw(326) << setfill('-') << "-" << endl;  
+		cout << setfill(' ');
+		for (int i = 0; i < hitungJumlahPeminjam(); i++)
+		{      
+				cout <<setw(2)<<setfill(' ') << i + 1 << " | "
+							<< setw(25) << left << user[i][0] << " | " //nama
+							<< setw(9)  << left << user[i][1] << " | " //nim
+							<< setw(8)  << left << user[i][2] << " | " //fakultas
+							<< setw(35) << left << user[i][3] << " | " //email
+							<< setw(9)  << left << user[i][4] << " | " //password
+							<< setw(55) << left << user[i][5] << " | " //judul1
+							<< setw(55) << left << user[i][6] << " | " //judul2
+							<< setw(55) << left << user[i][7] << " | " << endl; //judul3
+				cout << setw(326) << setfill('-') << "-" << endl;
+				cout << setfill(' ');
+		}
+		cout << "Tekan y untuk keluar : ";
+		cin >> kembali;
+	} while (kembali == 'n' || kembali == 'N');
+}
+
+void ubahpeminjam(){
+	string namabaru, nimbaru, fakultasbaru, emailbaru, passwordbaru, judul1baru, judul2baru, judul3baru;
+	int nopeminjam;
+	char kondisi;
+	char kembali;
+	do{
+		kembali = 'n';
+		tampilpeminjam();
+		cout << "Pilih Nomor Peminjam yang ingin diubah : "; cin >> nopeminjam;
+		cout << "Apakah data atas nama " << user[nopeminjam-1][0] << " yang ingin diubah?" << endl;
+		cout << "Jika ya tekan y : ";cin>>kondisi;
+		cin.ignore();
+		if (kondisi == 'y' || kondisi == 'Y'){
+			system("cls");
+			cout<< "Masukkan Nama Peminjam baru 	: ";getline(cin, namabaru);
+			cout<< "Masukkan Nim Peminjam baru 		: ";getline(cin, nimbaru);
+			cout<< "Masukkan Fakultas Peminjam baru : ";getline(cin, fakultasbaru);
+			do {
+				if (ulang == 'y') {
+					cout << "Email yang anda masukkan bukan email kampus.\nGunakan email kampus yang terdapat @student.upnyk.ac.id" << endl;
+				}
+				ulang = 'n';
+				cout<< "Masukkan Email Peminjam baru 	: ";getline(cin, emailbaru);
+				cin.ignore();
+				// Cek apakah email mengandung @kampus.ac
+				if (emailbaru.size() >= 20 && emailbaru.substr(emailbaru.size() - 20) == "@student.upnyk.ac.id") {
+					ulang = 'n';
+				} else {
+					ulang = 'y';
+				}
+			} while (ulang == 'y');
+			cout<< "Masukkan Judul 1 baru 			: ";getline(cin, judul1baru);
+			cout<< "Masukkan Judul 2 baru 			: ";getline(cin, judul2baru);
+			cout<< "Masukkan Judul 3 baru 			: ";getline(cin, judul3baru);
+			do{
+				if (ulang == 'y') {
+            		cout << "Isikan password minimal 8 karakter!!" << endl;
+        		}
+        		ulang = 'n';
+				cout<< "Masukkan Password Peminjam baru : ";getline(cin, passwordbaru);
+				if (passwordbaru.length() > 8)
+				{
+					user[nopeminjam-1][0] = namabaru;
+					user[nopeminjam-1][1] = nimbaru;
+					user[nopeminjam-1][2] = fakultasbaru;
+					user[nopeminjam-1][3] = emailbaru;
+					user[nopeminjam-1][5] = judul1baru;
+					user[nopeminjam-1][6] = judul2baru;
+					user[nopeminjam-1][7] = judul3baru;
+					user[nopeminjam-1][4] = passwordbaru;
+				} else {
+					ulang = 'y';
+				}
+			} while (ulang == 'y');
+		}
+		else{
+				system("cls");
+		}
+		cout << "Tekan y untuk keluar : ";
+		cin >> kembali;
+	} while (kembali == 'n' || kembali == 'N');
+}
+
+int hitungpeminjam(){
+	int count = 0;
+	for (int i = 0; i < max; i++)
+	{
+		if (user[i][0] != "")
+		{
+			count++;
+		}
+		else{
+			break;
+		}
+	}
+	return count;
+}
+
+void tambahpeminjam(){
+	string namabaru, nimbaru, fakultasbaru, emailbaru, passwordbaru, judul1baru, judul2baru, judul3baru;
+	int nopeminjam;
+	char kembali;
+	do{
+		kembali = 'n';
+			system("cls");
+			cout<< "Masukkan Nama Peminjam 		: ";getline(cin, namabaru);
+			cout<< "Masukkan Nim Peminjam 		: ";getline(cin, nimbaru);
+			cout<< "Masukkan Fakultas Peminjam  : ";getline(cin, fakultasbaru);
+			do {
+				if (ulang == 'y') {
+					cout << "Email yang anda masukkan bukan email kampus.\nGunakan email kampus yang terdapat @student.upnyk.ac.id" << endl;
+				}
+				ulang = 'n';
+				cout<< "Masukkan Email Peminjam 	: ";getline(cin, emailbaru);
+				cin.ignore();
+				// Cek apakah email mengandung @kampus.ac
+				if (emailbaru.size() >= 20 && emailbaru.substr(emailbaru.size() - 20) == "@student.upnyk.ac.id") {
+					ulang = 'n';
+				} else {
+					ulang = 'y';
+				}
+			} while (ulang == 'y');
+			cout<< "Masukkan Judul 1			: ";getline(cin, judul1baru);
+			cout<< "Masukkan Judul 2 			: ";getline(cin, judul2baru);
+			cout<< "Masukkan Judul 3			: ";getline(cin, judul3baru);
+			do{
+				if (ulang == 'y') {
+            		cout << "Isikan password minimal 8 karakter!!" << endl;
+        		}
+        		ulang = 'n';
+				cout<< "Masukkan Password Peminjam : ";getline(cin, passwordbaru);
+				if (passwordbaru.length() > 8)
+				{
+					user[daftaruser][0] = namabaru;
+					user[daftaruser][1] = nimbaru;
+					user[daftaruser][2] = fakultasbaru;
+					user[daftaruser][3] = emailbaru;
+					user[daftaruser][5] = judul1baru;
+					user[daftaruser][6] = judul2baru;
+					user[daftaruser][7] = judul3baru;
+					user[daftaruser][4] = passwordbaru;
+					daftaruser++;
+				} else {
+					ulang = 'y';
+				}
+			} while (ulang == 'y');
+		cout << "Tekan y untuk keluar : ";
+		cin >> kembali;
+	} while (kembali == 'n' || kembali == 'N');
+}
