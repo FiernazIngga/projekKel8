@@ -271,48 +271,58 @@ void cetakSemuaBuku(){
 
 void kembalikanBuku(){
 	int kmbBuku = 0, kmbBukuIndeks = 0;
-	bool ulangi = true;
+	bool ulangi = true, cek_kosong = 1;
 	char konfirm;
-	cout << "Daftar buku yang anda pinjam" << endl;
-	daftarPinjam();
-	while (ulangi)
-	{
-		cout << "Pilih no berapa dari buku yang ingin anda kembalikan! (Isikan 1/2/3) : ";
-		cin >> kmbBuku;
-		if ((kmbBuku > 0)||(kmbBuku < 3))
+	if(user[pengguna][5].empty()){
+		cout << "Anda tidak meminjam buku apapun silahkan kembali!" << endl;
+	} else {
+		cout << "Daftar buku yang anda pinjam" << endl;
+		daftarPinjam();
+		while (ulangi)
 		{
-			ulangi = 1;
-			cout << "Masukkan pilihan hanya 1 sampai 3!!" << endl;
-			getch();
-		} else {
-			ulangi = 0;
+			cout << "Pilih no berapa dari buku yang ingin anda kembalikan! (Isikan 1/2/3) : ";
+			cin >> kmbBuku;
+			if ((kmbBuku < 0)||(kmbBuku > 3))
+			{
+				ulangi = 1;
+				cout << "Masukkan pilihan hanya 1 sampai 3!!" << endl;
+				getch();
+			} else {
+				ulangi = 0;
+			}
 		}
-	}
-	kmbBukuIndeks = kmbBuku + 4;
-	cout << "Apakah anda yakin ingin mengembalikan buku" << endl;
-	for (int i = 0; i < hitungJumlahBuku(); i++)
-	{
-		if (user[pengguna][kmbBukuIndeks] == buku[i][0])
+		kmbBukuIndeks = kmbBuku + 4;
+		cout << "Apakah anda yakin ingin mengembalikan buku" << endl;
+		for (int i = 0; i < hitungJumlahBuku(); i++)
 		{
-			cout << "Judul        : " << buku[i][0] << endl;
-			cout << "Penulis      : " << buku[i][1] << endl;
-			cout << "Penerbit     : " << buku[i][2] << endl;
-			cout << "Tahun terbit : " << buku[i][3] << endl;
-			cout << "Genre        : " << buku[i][4] << endl;
-			cout << "Asal         : " << buku[i][5] << endl;
+			if (buku[i][0] == user[pengguna][kmbBukuIndeks])
+			{
+				cout << "Judul        : " << buku[i][0] << endl;
+				cout << "Penulis      : " << buku[i][1] << endl;
+				cout << "Penerbit     : " << buku[i][2] << endl;
+				cout << "Tahun terbit : " << buku[i][3] << endl;
+				cout << "Genre        : " << buku[i][4] << endl;
+				cout << "Asal         : " << buku[i][5] << endl;
+			}
 		}
-	}
-	cout << "Masukkan pilihan anda : ";
-	cin >> konfirm;
-	if (konfirm == 'y')
-	{
-		for (int j = kmbBukuIndeks; j < 8; j++)
+		cout << "Apakah anda ingin mengembalikan buku? y/n : ";
+		cin >> konfirm;
+		if (konfirm == 'y')
 		{
-			user[pengguna][j] = user[pengguna][j+1];
+			for (int i = 0; i < hitungJumlahBuku(); i++)
+			{
+				if (buku[i][0] == user[pengguna][kmbBukuIndeks])
+				{
+					buku[i][6] = "Tersedia";
+				}	
+			}
+			for (int j = kmbBukuIndeks; j < 8; j++)
+			{
+				user[pengguna][j] = user[pengguna][j+1];
+			}
 		}
+		system("cls");
+		cout << "Daftar buku yang anda pinjam" << endl;
+		daftarPinjam();
 	}
-	system("cls");
-	cout << "Daftar buku yang anda pinjam" << endl;
-	daftarPinjam();
-	
 }
