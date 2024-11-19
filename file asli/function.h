@@ -42,7 +42,7 @@ void daftar(){
         ulang = 'n';
 		cout << "Masukkan Password Bebas                  : ";
 		getline(cin,pass);
-		if (pass.length() > 8)
+		if (pass.length() > 4)
 		{
 			user[daftaruser][0] = nama;
 			user[daftaruser][1] = nim;
