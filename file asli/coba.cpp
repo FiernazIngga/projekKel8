@@ -1,11 +1,9 @@
 #include "function.h"
 
-main(){
-    do
-    {
-        system("cls");
-        kembalikanBuku();
-        cout << "Apakah anda ingin kembali? y / n : ";
-        cin >> kembali_anggota;
-    } while (kembali_anggota == 'n' || kembali_anggota == 'N');
-}
+using namespace std;
+
+// int main() {
+//     string cek = waktu();
+//     cout << cek;
+//     return 0;  // Menandakan program telah selesai dengan sukses
+// }

@@ -1,14 +1,32 @@
 #include "buku.h"
 #define max 100
+#define data 200
 
 // user[][] = {nama ,nim, fakultas, email, password, buku 1, buku 2, buku 3}
 
 string user[max][8];
+string peminjaman[data][3];
+string kembalianBu[data][3];
 string nama ,nim, fakultas, password, email, fakul, genreBuku, negaraBuku, pass;
 char ulang, kembali_anggota;
-int login, pengguna = 0, daftaruser=0, jmlBuku;
+int login, pengguna = 0, daftaruser=0, jmlBuku, indekPeminjaman = 0, indeksKembalian = 0;
 
+string waktuSaatIni(){
+	    // Mendapatkan waktu saat ini
+    time_t now = time(0);  // Mendapatkan waktu dalam detik sejak epoch (1 Januari 1970)
 
+    // Mengonversi waktu ke format waktu lokal
+    tm *ltm = localtime(&now);
+
+    // Membuat buffer untuk menyimpan tanggal dalam format YYYY-MM-DD
+    char buffer[15];  // 10 karakter untuk tanggal + 1 untuk karakter null-terminator
+
+    // Mengisi buffer dengan tanggal dalam format YYYY-MM-DD
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d", ltm);
+
+    // Menampilkan tanggal
+	return buffer;
+}
 
 void daftar(){
 	system("cls");
@@ -97,6 +115,10 @@ void pinjam(){
 						}
 						user[pengguna][indeksBuku] = buku[pilihan-1][0];
 						buku[pilihan-1][6] = "Dipinjam";
+						peminjaman[indekPeminjaman][0] = user[pengguna][1];
+						peminjaman[indekPeminjaman][1] = buku[pilihan-1][0];
+						peminjaman[indekPeminjaman][2] = waktuSaatIni();
+						indekPeminjaman++;
 					} else {
 						cout << "Apakah anda ingin meminjam buku yang lain? y/n : ";
 						cin >> ulang;
@@ -270,6 +292,7 @@ void cetakSemuaBuku(){
 }
 
 void kembalikanBuku(){
+	string bukuKembali;
 	int kmbBuku = 0, kmbBukuIndeks = 0;
 	bool ulangi = true, cek_kosong = 1;
 	char konfirm;
@@ -299,6 +322,7 @@ void kembalikanBuku(){
 			{
 				system("cls");
 				cout << "Judul        : " << buku[i][0] << endl;
+				bukuKembali = buku[i][0];
 				cout << "Penulis      : " << buku[i][1] << endl;
 				cout << "Penerbit     : " << buku[i][2] << endl;
 				cout << "Tahun terbit : " << buku[i][3] << endl;
@@ -322,6 +346,10 @@ void kembalikanBuku(){
 			{
 				user[pengguna][j] = user[pengguna][j+1];
 			}
+			kembalianBu[indeksKembalian][0] = user[pengguna][1];
+			kembalianBu[indeksKembalian][1] = bukuKembali;
+			kembalianBu[indeksKembalian][2] = waktuSaatIni();
+			indeksKembalian++;
 		}
 		system("cls");
 		cout << "Daftar buku yang anda pinjam" << endl;

@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <string>
 #include <cstring>
+#include <ctime>
 #define maxBuku 98
 using namespace std;
 
