@@ -297,12 +297,14 @@ void kembalikanBuku(){
 		{
 			if (buku[i][0] == user[pengguna][kmbBukuIndeks])
 			{
+				system("cls");
 				cout << "Judul        : " << buku[i][0] << endl;
 				cout << "Penulis      : " << buku[i][1] << endl;
 				cout << "Penerbit     : " << buku[i][2] << endl;
 				cout << "Tahun terbit : " << buku[i][3] << endl;
 				cout << "Genre        : " << buku[i][4] << endl;
 				cout << "Asal         : " << buku[i][5] << endl;
+				break;
 			}
 		}
 		cout << "Apakah anda ingin mengembalikan buku? y/n : ";
