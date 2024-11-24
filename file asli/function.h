@@ -2,7 +2,7 @@
 #define max 100
 #define data 200
 
-// user[][] = {nama ,nim, fakultas, email, password, buku 1, buku 2, buku 3}
+// user[][] = {nama ,nim, fakultas, email, password, buku 1, buku 2, buku 3}  => keterangan array
 
 string user[max][8];
 string peminjaman[data][3];
