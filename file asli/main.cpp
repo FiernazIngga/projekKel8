@@ -196,7 +196,7 @@ int main() {
 				{
 					kembali_admin = 'n', 'N';
 					system("cls");
-					cout << "1. Tampilkan Data Peminjam \n2. Tambah Data Peminjam \n3. Ubah Data Peminjam \n4. Hapus Data Peminjam \n5. Log Out" << endl;
+					cout << "1. Tampilkan Data User \n2. Tambah Data User \n3. Ubah Data User \n4. Hapus Data User \n5. Log Out" << endl;
 					cout << "Pilihan : ";
 					cin >> pilihan2;
 
@@ -205,8 +205,8 @@ int main() {
 						do
 						{
 							system("cls");
-							cout << "Tampilkan Peminjam" << endl;
-							cout << "Apakah anda ingin kembali? y / n : ";
+							tampiluser();							
+							cout << "Apakah anda benar-benar ingin kembali? y / n : ";
 							cin >> kembali_admin;
 						} while (kembali_admin == 'n' || kembali_admin == 'N');
 						break;
@@ -215,8 +215,8 @@ int main() {
 						do
 						{
 							system("cls");
-							cout << "Tambah data peminjam" << endl;
-							cout << "Apakah anda ingin kembali? y / n : ";
+							tambahuser();
+							cout << "Apakah anda benar-benar ingin kembali? y / n : ";
 							cin >> kembali_admin;
 						} while (kembali_admin == 'n' || kembali_admin == 'N');
 						break;
@@ -225,17 +225,20 @@ int main() {
 						do
 						{
 							system("cls");
-							cout << "Ubah data peminjam" << endl;
-							cout << "Apakah anda ingin kembali? y / n : ";
+							ubahuser();
+							cout << "Apakah anda benar-benar ingin kembali? y / n : ";
 							cin >> kembali_admin;
 						} while (kembali_admin == 'n' || kembali_admin == 'N');
 						break;
 
 					case '4':
-						system("cls");
-						cout << "Hapus data peminjam" << endl;
-						cout << "Apakah anda ingin kembali? y / n : ";
-						cin >> kembali_admin;
+						do
+						{
+							system("cls");
+							hapususer();
+							cout << "Apakah anda benar-benar ingin kembali? y / n : ";
+							cin >> kembali_admin;
+						} while (kembali_admin == 'n' || kembali_admin == 'N');
 						break;
 
 					case '5':

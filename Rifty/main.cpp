@@ -196,7 +196,7 @@ int main() {
 						do
 						{
 							system("cls");
-                            tampilpeminjam();
+                            tampiluser();
 							cout << "Apakah anda ingin kembali? y / n : ";
 							cin >> kembali_admin;
 						} while (kembali_admin == 'n' || kembali_admin == 'N');
@@ -206,7 +206,7 @@ int main() {
 						do
 						{
 							system("cls");
-							tambahpeminjam();
+							tambahuser();
 							cout << "Apakah anda ingin kembali? y / n : ";
 							cin >> kembali_admin;
 						} while (kembali_admin == 'n' || kembali_admin == 'N');
@@ -216,7 +216,7 @@ int main() {
 						do
 						{
 							system("cls");
-							ubahpeminjam();
+							ubahuser();
 							cout << "Apakah anda ingin kembali? y / n : ";
 							cin >> kembali_admin;
 						} while (kembali_admin == 'n' || kembali_admin == 'N');
@@ -225,7 +225,7 @@ int main() {
 					case '4':
 						do{
 							system("cls");
-							hapuspeminjam();
+							hapususer();
 							cout << "Apakah anda ingin kembali? y / n : ";
 							cin >> kembali_admin;
 						} while (kembali_admin == 'n' || kembali_admin == 'N');
