@@ -39,7 +39,9 @@ int main() {
 			switch (loginAs)
 			{
 			case '1':
-			do
+			if (daftaruser>0)
+			{
+				do
 			{
 				system("cls");
                 kembali_login = 'n';
@@ -72,6 +74,21 @@ int main() {
 				}
 				
 			} while (kembali_login == 'y');
+			}
+		
+			else{
+				cout <<"Maaf anda belum mendaftar\n";
+				cout << "Apakah anda ingin kembali ke menu awal y/n";
+				cin>>ulang;
+				if (ulang == 'y'|| ulang== 'Y')
+				{
+					ulang = 'y';
+				}
+				else{
+					ulang = 'n';
+				}
+				
+			}
 				break;
 			case '2':
 			do
