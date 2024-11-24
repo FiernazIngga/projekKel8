@@ -38,6 +38,9 @@ int main() {
 			switch (loginAs)
 			{
 			case '1':
+			if (daftaruser > 0)
+			{
+							
 			do
 			{
 				system("cls");
@@ -71,6 +74,14 @@ int main() {
 				}
 				
 			} while (kembali_login == 'y');
+			}
+
+			else if(daftaruser <= 0){
+				cout << "Mohon mendaftar terlebih dahulu";
+				ulang = 'y';
+				cout << "\nTekan apa saja untuk keluar dari sini";
+				getch();
+			}
 				break;
 			case '2':
 			do
@@ -109,7 +120,7 @@ int main() {
 				{
 					kembali_anggota = 'n','N';
 					system("cls");
-					cout << "Selamat datang" << user[pengguna][0] << endl;
+					cout << "Selamat datang " << user[pengguna][0] << endl;
 					cout << "1. Ubah Data Buku\n2. Tampilkan Buku \n3. Pinjam Buku \n4. Kembalikan Buku \n5. Keterangan anda \n6. Logout" << endl;
 					cout << "Masukkan pilihan anda (isikan pilihan anda dengan memasukkan angka 1/2/3/4/5) : ";
 					cin >> pilihan2;
@@ -196,7 +207,7 @@ int main() {
 				{
 					kembali_admin = 'n', 'N';
 					system("cls");
-					cout << "1. Tampilkan Data User \n2. Tambah Data User \n3. Ubah Data User \n4. Hapus Data User \n5. Log Out" << endl;
+					cout << "1. Tampilkan Data User \n2. Tambah Data User \n3. Ubah Data User \n4. Hapus Data User \n5. Ubah Data Buku\nLog Out" << endl;
 					cout << "Pilihan : ";
 					cin >> pilihan2;
 
@@ -242,6 +253,13 @@ int main() {
 						break;
 
 					case '5':
+						system("cls");
+						ubahdatabuku();
+						cout << "Apakah anda ingin kembali? y / n : ";
+						cin >> kembali_admin;
+						break;
+
+					case '6':
 						logout2 = 'n';
 						system("cls");
 						cout << "Apakah anda yakin ingin logout? y / n : ";
