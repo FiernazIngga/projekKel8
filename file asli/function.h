@@ -532,7 +532,11 @@ int hitungbuku(){
 }
 
 void ubahdatabuku(){
-    system("cls");
+	bool ubahdata = true;
+	do
+	{
+	
+		system("cls");
 	int jumlahbuku = hitungbuku();
 	string bukunew, penulisbaru, penerbitbaru, tahunterbitbaru, genrebaru, asalbaru;
 	char inginlihat, kondisi;
@@ -546,7 +550,8 @@ void ubahdatabuku(){
 	<< "6. Asal\n"
 	<< "7. Tambah daftar buku\n"
 	<< "8. Hapus Buku \n"
-	<< "Masukan nomor yang anda inginkan : ";cin >>ubahdata;
+	<< "9. Keluar\n"
+	<<"Masukan nomor yang anda inginkan : ";cin >>ubahdata;
 
     switch(ubahdata){
 		case 1 : 		 
@@ -727,6 +732,7 @@ void ubahdatabuku(){
 			else{
 			
 			}
+		}
 
 		break;
 
@@ -752,8 +758,31 @@ void ubahdatabuku(){
 			}
 		}
 		break;
+
+		case 9 :
+		bool keluarubahbuku ;
+		system("cls");
+		cout << "Apakah anda ingin keluar ? (y/n)\n";cin>>keluarubahbuku;
+		if (keluarubahbuku == 'y' || keluarubahbuku == 'Y')
+		{
+			ubahdata = false;
+		}
+		
+		else if (keluarubahbuku == 'n' || keluarubahbuku == 'N')
+		{
+			ubahdata = true;
+		}
+		else{
+			cout << "Masukan pilihan yang benar";
+		}
+
+		break;
 		
 
-		}}
-}
+		}
+		}
+
 	
+	 while (ubahdata);
+	
+}

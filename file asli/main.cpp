@@ -21,6 +21,7 @@ int main() {
 			do
 			{
 				kembali_lihat = 'y', 'Y';
+			
 				system("cls");
 				cetakSemuaBuku();
 				cout << "Apakah anda ingin kembali? y / n : ";
@@ -207,7 +208,7 @@ int main() {
 				{
 					kembali_admin = 'n', 'N';
 					system("cls");
-					cout << "1. Tampilkan Data User \n2. Tambah Data User \n3. Ubah Data User \n4. Hapus Data User \n5. Ubah Data Buku\nLog Out" << endl;
+					cout << "1. Tampilkan Data User \n2. Tambah Data User \n3. Ubah Data User \n4. Hapus Data User \n5. Ubah Data Buku\n6.log Out" << endl;
 					cout << "Pilihan : ";
 					cin >> pilihan2;
 
