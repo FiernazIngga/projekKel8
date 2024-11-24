@@ -223,10 +223,12 @@ int main() {
 						break;
 
 					case '4':
-						system("cls");
-						cout << "Hapus data peminjam" << endl;
-						cout << "Apakah anda ingin kembali? y / n : ";
-						cin >> kembali_admin;
+						do{
+							system("cls");
+							hapuspeminjam();
+							cout << "Apakah anda ingin kembali? y / n : ";
+							cin >> kembali_admin;
+						} while (kembali_admin == 'n' || kembali_admin == 'N');
 						break;
 
 					case '5':
