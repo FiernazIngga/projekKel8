@@ -5,8 +5,8 @@
 // user[][] = {nama ,nim, fakultas, email, password, buku 1, buku 2, buku 3}  => keterangan array
 
 string user[max][8];
-string peminjaman[data][3];
-string kembalianBu[data][3];
+string peminjaman[data][4];
+string kembalianBu[data][4];
 string nama ,nim, fakultas, password, email, fakul, genreBuku, negaraBuku, pass;
 char ulang, kembali_anggota;
 int login, pengguna = 0, daftaruser=0, jmlBuku, indekPeminjaman = 0, indeksKembalian = 0;
@@ -23,6 +23,23 @@ string waktuSaatIni(){
 
     // Mengisi buffer dengan tanggal dalam format YYYY-MM-DD
     strftime(buffer, sizeof(buffer), "%Y-%m-%d", ltm);
+
+    // Menampilkan tanggal
+	return buffer;
+}
+
+string jamsaatIni(){
+	    // Mendapatkan waktu saat ini
+    time_t now = time(0);  // Mendapatkan waktu dalam detik sejak epoch (1 Januari 1970)
+
+    // Mengonversi waktu ke format waktu lokal
+    tm *ltm = localtime(&now);
+
+    // Membuat buffer untuk menyimpan waktu dalam format HH-MM-SS
+    char buffer[15];  // 10 karakter untuk tanggal + 1 untuk karakter null-terminator
+
+    // Mengisi buffer dengan tanggal dalam format HH-MM-SS
+    strftime(buffer, sizeof(buffer), "%H:%M:%S", ltm);
 
     // Menampilkan tanggal
 	return buffer;
@@ -118,6 +135,7 @@ void pinjam(){
 						peminjaman[indekPeminjaman][0] = user[pengguna][1];
 						peminjaman[indekPeminjaman][1] = buku[pilihan-1][0];
 						peminjaman[indekPeminjaman][2] = waktuSaatIni();
+						peminjaman[indekPeminjaman][3] = jamsaatIni();
 						indekPeminjaman++;
 					} else {
 						cout << "Apakah anda ingin meminjam buku yang lain? y/n : ";
@@ -349,6 +367,7 @@ void kembalikanBuku(){
 			kembalianBu[indeksKembalian][0] = user[pengguna][1];
 			kembalianBu[indeksKembalian][1] = bukuKembali;
 			kembalianBu[indeksKembalian][2] = waktuSaatIni();
+			kembalianBu[indeksKembalian][3] = jamsaatIni();
 			indeksKembalian++;
 		}
 		system("cls");
@@ -740,3 +759,102 @@ void ubahdatabuku(){
 		}}
 }
 	
+void tampildatapinjam(){
+    system("cls");
+    cout << "Data Pinjam" << endl;
+    // Tampilkan pinjaman
+    cout << setw(100) << setfill('=') << "" << endl;
+    cout << setfill(' ');
+    cout << "| NO | NIM       |  Judul Buku                                             | Tanggal    | Tanggal   |" << endl;
+    cout << setw(100) << setfill('-') << "-" << endl;  
+    cout << setfill(' ');
+    for (int i = 0; i < indekPeminjaman; i++) {   
+        cout << "|" << setw(3) << setfill(' ') << i + 1 << " | "
+             << setw(9) << left << peminjaman[i][0] << " | "  // nim
+             << setw(55) << left << peminjaman[i][1] << " | " // judul buku
+             << setw(9) << left << peminjaman[i][2] << " | "  // Tanggal
+			 << setw(9) << left << peminjaman[i][3] << " | "  // Waktu
+             << endl;
+        cout << setw(100) << setfill('-') << "-" << endl;
+        cout << setfill(' ');
+    }
+	cout << "Data Kembali" << endl;
+    // Tampilkan kembalian
+    cout << setw(100) << setfill('=') << "" << endl;
+    cout << setfill(' ');
+    cout << "| NO | NIM       |  Judul Buku                                             | Tanggal    | Tanggal   |" << endl;
+    cout << setw(100) << setfill('-') << "-" << endl;  
+    cout << setfill(' ');
+    for (int i = 0; i < indeksKembalian; i++) {   
+        cout << "|" << setw(3) << setfill(' ') << i + 1 << " | "
+             << setw(9) << left << kembalianBu[i][0] << " | "  // nim
+             << setw(55) << left << kembalianBu[i][1] << " | " // judul buku
+             << setw(9) << left << kembalianBu[i][2] << " | "  // Tanggal
+			 << setw(9) << left << kembalianBu[i][3] << " | "  // Waktu
+             << endl;
+        cout << setw(100) << setfill('-') << "-" << endl;
+        cout << setfill(' ');
+    }
+}
+
+bool cekdata(string& utama, string& bagian){
+	int i,j;
+    int katautama = utama.length();
+    int katabagian = bagian.length();
+
+    if (katabagian > katautama){
+        return false;
+    }
+
+    for (i = 0; i <= katautama - katabagian; i++){
+        for (j = 0; j < katabagian; j++){
+            if (utama[i + j] != bagian[j]){
+                break;
+            }
+        }
+        if (j == katabagian) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void caridatapinjam(string& pencarian) {
+	char kembali;
+    bool ditemukan = false;
+	do{
+		for (int i = 0; i < indekPeminjaman; i++) {
+			if (cekdata(peminjaman[i][0], pencarian) || 
+				cekdata(peminjaman[i][1], pencarian) || 
+				cekdata(peminjaman[i][2], pencarian) || 
+				cekdata(peminjaman[i][3], pencarian)) {
+				cout << endl;
+				cout << "keterangan : Pinjam" << endl;
+				cout << "NIM        : " << peminjaman[i][0] << endl;
+				cout << "Nama Buku  : " << peminjaman[i][1] << endl;
+				cout << "Tanggal    : " << peminjaman[i][2] << endl;
+				cout << "Waktu      : " << peminjaman[i][3] << endl;
+				ditemukan = true;
+			}
+		}
+		for (int i = 0; i < indeksKembalian; i++) {
+			if (cekdata(kembalianBu[i][0], pencarian) || 
+				cekdata(kembalianBu[i][1], pencarian) || 
+				cekdata(kembalianBu[i][2], pencarian) || 
+				cekdata(kembalianBu[i][3], pencarian)) {
+				cout << endl;
+				cout << "keterangan : Kembali" << endl;
+				cout << "NIM        : " << kembalianBu[i][0] << endl;
+				cout << "Nama Buku  : " << kembalianBu[i][1] << endl;
+				cout << "Tanggal    : " << kembalianBu[i][2] << endl;
+				cout << "Waktu      : " << kembalianBu[i][3] << endl;
+				ditemukan = true;
+				}
+		}
+		if (!ditemukan) {
+			cout << "Data Peminjam dengan Kata Kunci " << pencarian << " tidak ditemukan." << endl;
+		}
+	cout << "Tekan y untuk keluar : ";
+    cin >> kembali;
+    }while (kembali == 'n' || kembali == 'N');
+}

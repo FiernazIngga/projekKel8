@@ -4,7 +4,7 @@ using namespace std;
 int main() {
 	int hasil, pilihan1, login;
 	char pilihan2, ulang, kembali_admin, logout, logout2, ulangi_buku, kembali_lihat, kembali_daftar, kembali_login, loginAs, pilihanKet;
-	string Nim, pass, username;
+	string Nim, pass, username, pencarian;
 
 	do
 	{
@@ -255,17 +255,29 @@ int main() {
 
 					case '5':
 					do
-					{
-						system("cls");
-						ubahdatabuku();
-						cout << "Apakah anda ingin kembali? y / n : ";
-						cin >> kembali_admin;
-					} while (kembali_admin == 'n' || kembali_admin == 'N');
-					
-						
+						{
+							system("cls");
+							ubahdatabuku();
+							cout << "Apakah anda ingin kembali? y / n : ";
+							cin >> kembali_admin;
+						} while (kembali_admin == 'n' || kembali_admin == 'N');
 						break;
 
 					case '6':
+						do
+						{
+							system("cls");
+							cout << "Masukkan kata kunci dari data yang ingin dicari (NIM, Nama Buku, Tanggal) : ";
+							cin >> pencarian;
+							cin.ignore();
+							caridatapinjam(pencarian);
+							cout << "Apakah anda benar-benar ingin kembali? y / n : ";
+							cin >> kembali_admin;
+						} while (kembali_admin == 'n' || kembali_admin == 'N');
+						break;
+						
+
+					case '7':
 						logout2 = 'n';
 						system("cls");
 						cout << "Apakah anda yakin ingin logout? y / n : ";
