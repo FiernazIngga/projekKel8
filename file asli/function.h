@@ -514,30 +514,9 @@ void hapususer(){
     } while (kembali == 'n' || kembali == 'N');
 }
 
-int hitungbuku(){
-	int count = 0;
-	for (int i = 0; i < maxBuku; i++)
-	{
-		if (buku[i][0] != "")
-		{
-			count++;
-		}
-		else{
-			break;
-		}
-		
-	}
-	return count;
-	
-}
-
 void ubahdatabuku(){
-	bool ubahdata = true;
-	do
-	{
-	
-		system("cls");
-	int jumlahbuku = hitungbuku();
+    system("cls");
+	int jumlahbuku = hitungJumlahBuku();
 	string bukunew, penulisbaru, penerbitbaru, tahunterbitbaru, genrebaru, asalbaru;
 	char inginlihat, kondisi;
 	int ubahdata, nobuku, ketersediaan;
@@ -550,8 +529,7 @@ void ubahdatabuku(){
 	<< "6. Asal\n"
 	<< "7. Tambah daftar buku\n"
 	<< "8. Hapus Buku \n"
-	<< "9. Keluar\n"
-	<<"Masukan nomor yang anda inginkan : ";cin >>ubahdata;
+	<< "Masukan nomor yang anda inginkan : ";cin >>ubahdata;
 
     switch(ubahdata){
 		case 1 : 		 
@@ -732,7 +710,6 @@ void ubahdatabuku(){
 			else{
 			
 			}
-		}
 
 		break;
 
@@ -758,31 +735,8 @@ void ubahdatabuku(){
 			}
 		}
 		break;
-
-		case 9 :
-		bool keluarubahbuku ;
-		system("cls");
-		cout << "Apakah anda ingin keluar ? (y/n)\n";cin>>keluarubahbuku;
-		if (keluarubahbuku == 'y' || keluarubahbuku == 'Y')
-		{
-			ubahdata = false;
-		}
-		
-		else if (keluarubahbuku == 'n' || keluarubahbuku == 'N')
-		{
-			ubahdata = true;
-		}
-		else{
-			cout << "Masukan pilihan yang benar";
-		}
-
-		break;
 		
 
-		}
-		}
-
-	
-	 while (ubahdata);
-	
+		}}
 }
+	

@@ -254,10 +254,15 @@ int main() {
 						break;
 
 					case '5':
+					do
+					{
 						system("cls");
 						ubahdatabuku();
 						cout << "Apakah anda ingin kembali? y / n : ";
 						cin >> kembali_admin;
+					} while (kembali_admin == 'n' || kembali_admin == 'N');
+					
+						
 						break;
 
 					case '6':
