@@ -4,14 +4,14 @@ using namespace std;
 int main() {
 	int hasil, pilihan1, login;
 	char pilihan2, ulang, kembali_admin, logout, logout2, ulangi_buku, kembali_lihat, kembali_daftar, kembali_login, loginAs, pilihanKet;
-	string Nim, pass, username;
+	string Nim, pass, username, pencarian;
 
 	do
 	{
 		ulang = 'n';
 		system("cls");
 		cout << "Selamat datang di Perpustakaan Kelas C for Cakep" << endl;
-		cout << "1. Tampilkan Buku \n2. Login \n3. Daftar \n4. Keluar" << endl;
+		cout << "1. Tampilkan Buku \n2. Login \n3. Daftar" << endl;
 		cout << "Masukkan pilihan anda (isikan pilihan anda dengan memasukkan angka 1/2/3) : ";
 		cin >> pilihan1;
 		cin.ignore();
@@ -44,7 +44,7 @@ int main() {
                 kembali_login = 'n';
                 login = 100;
 				cout << "Login" << endl;
-				cout << "Masukkan NIM anda      : ";
+				cout << "Masukkan NIM anda     : ";
 				cin >> Nim;
 				cout << "Masukkan password anda : ";
 				cin >> pass;
@@ -79,7 +79,7 @@ int main() {
                 kembali_login = 'n';
                 login = 100;
 				cout << "Login" << endl;
-				cout << "Masukkan username anda : ";
+				cout << "Masukkan username anda     : ";
 				cin >> username;
 				cout << "Masukkan password anda : ";
 				cin >> password;
@@ -109,8 +109,8 @@ int main() {
 				{
 					kembali_anggota = 'n','N';
 					system("cls");
-					cout << "Selamat datang " << user[pengguna][0] << endl;
-					cout << "1. Tampilkan Buku \n2. Pinjam Buku \n3. Kembalikan Buku \n4. Keterangan anda \n5. Logout" << endl;
+					cout << "Selamat datang" << user[pengguna][0] << endl;
+					cout << "1. Ubah Data Buku\n2. Tampilkan Buku \n3. Pinjam Buku \n4. Kembalikan Buku \n5. Keterangan anda \n6. Logout" << endl;
 					cout << "Masukkan pilihan anda (isikan pilihan anda dengan memasukkan angka 1/2/3/4/5) : ";
 					cin >> pilihan2;
 					switch (pilihan2)
@@ -128,7 +128,7 @@ int main() {
 						do
 						{
 							system("cls");
-							pinjam();
+							cetakSemuaBuku();
 							cout << "Apakah anda ingin kembali? y / n : ";
 							cin >> kembali_anggota;
 						} while (kembali_anggota == 'n' || kembali_anggota == 'N');
@@ -137,12 +137,21 @@ int main() {
 						do
 						{
 							system("cls");
-							cout << "kembalikan" << endl;
+							pinjam();
 							cout << "Apakah anda ingin kembali? y / n : ";
 							cin >> kembali_anggota;
 						} while (kembali_anggota == 'n' || kembali_anggota == 'N');
 						break;
 					case '4':
+						do
+						{
+							system("cls");
+							kembalikanBuku();
+							cout << "Apakah anda ingin kembali? y / n : ";
+							cin >> kembali_anggota;
+						} while (kembali_anggota == 'n' || kembali_anggota == 'N');
+						break;
+					case '5':
 						do
 						{
 							system("cls");
@@ -163,7 +172,7 @@ int main() {
 							cin >> kembali_anggota;
 						} while (kembali_anggota == 'n' || kembali_anggota == 'N');
 						break;
-					case '5':
+					case '6':
 						logout2 = 'n';
 						system("cls");
 						cout << "Apakah anda yakin ingin logout? y / n : ";
@@ -187,7 +196,7 @@ int main() {
 				{
 					kembali_admin = 'n', 'N';
 					system("cls");
-					cout << "1. Tampilkan Data Peminjam \n2. Tambah Data Peminjam \n3. Ubah Data Peminjam \n4. Hapus Data Peminjam \n5. Ubah Data Buku\n6. Log Out" << endl;
+					cout << "1. Tampilkan Data User \n2. Tambah Data User \n3. Ubah Data User \n4. Hapus Data User \n5. Tampilkan Data Pinjam \n6. Cari Data Pinjam \n7. Log Out" << endl;
 					cout << "Pilihan : ";
 					cin >> pilihan2;
 
@@ -196,8 +205,8 @@ int main() {
 						do
 						{
 							system("cls");
-                            tampiluser();
-							cout << "Apakah anda ingin kembali? y / n : ";
+							tampiluser();							
+							cout << "Apakah anda benar-benar ingin kembali? y / n : ";
 							cin >> kembali_admin;
 						} while (kembali_admin == 'n' || kembali_admin == 'N');
 						break;
@@ -207,7 +216,7 @@ int main() {
 						{
 							system("cls");
 							tambahuser();
-							cout << "Apakah anda ingin kembali? y / n : ";
+							cout << "Apakah anda benar-benar ingin kembali? y / n : ";
 							cin >> kembali_admin;
 						} while (kembali_admin == 'n' || kembali_admin == 'N');
 						break;
@@ -217,28 +226,46 @@ int main() {
 						{
 							system("cls");
 							ubahuser();
-							cout << "Apakah anda ingin kembali? y / n : ";
+							cout << "Apakah anda benar-benar ingin kembali? y / n : ";
 							cin >> kembali_admin;
 						} while (kembali_admin == 'n' || kembali_admin == 'N');
 						break;
 
 					case '4':
-						do{
+						do
+						{
 							system("cls");
 							hapususer();
-							cout << "Apakah anda ingin kembali? y / n : ";
+							cout << "Apakah anda benar-benar ingin kembali? y / n : ";
 							cin >> kembali_admin;
 						} while (kembali_admin == 'n' || kembali_admin == 'N');
 						break;
 
 					case '5':
-						system("cls");
-						ubahdatabuku();
-						cout << "Apakah anda ingin kembali? y / n : ";
-						cin >> kembali_admin;
+						do
+						{
+							system("cls");
+							tampildatapinjam();
+							cout << "Apakah anda benar-benar ingin kembali? y / n : ";
+							cin >> kembali_admin;
+						} while (kembali_admin == 'n' || kembali_admin == 'N');
 						break;
 
 					case '6':
+						do
+						{
+							system("cls");
+							cout << "Masukkan kata kunci dari data yang ingin dicari (NIM, Nama Buku, Tanggal) : ";
+							cin >> pencarian;
+							cin.ignore();
+							caridatapinjam(pencarian);
+							cout << "Apakah anda benar-benar ingin kembali? y / n : ";
+							cin >> kembali_admin;
+						} while (kembali_admin == 'n' || kembali_admin == 'N');
+						break;
+						
+
+					case '7':
 						logout2 = 'n';
 						system("cls");
 						cout << "Apakah anda yakin ingin logout? y / n : ";
@@ -276,13 +303,11 @@ int main() {
 				ulang = 'y';
 			}
 			break;
-        case 4:
-            break;
 		default:
 			cout << "Pilihan tidak valid. Silahkan coba lagi!" << endl;
 			cout << "Apakah anda ingin memilih ulang? y / n : ";
 			cin >> ulang;
 			break;
-        }
+		}
 	} while (ulang == 'y');
 }

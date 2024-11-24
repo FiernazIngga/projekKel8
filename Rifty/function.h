@@ -1,36 +1,50 @@
 #include "buku.h"
 #define max 100
+#define data 200
+
 // user[][] = {nama ,nim, fakultas, email, password, buku 1, buku 2, buku 3}
 
-string user[max][8] = {{"Muhammad Rifty Alfattah", "123240093", "FTI", "12324093@student.upnyk.ac.id", "123240093"},
-					   {"Muhammad Arsy Nurfikri", "123240100", "FISIP", "123240100@student.upnyk.ac.id", "123240100"}};
+string user[max][8];
+string peminjaman[data][4];
+string kembalianBu[data][4];
 string nama ,nim, fakultas, password, email, fakul, genreBuku, negaraBuku, pass;
 char ulang, kembali_anggota;
-int login, pengguna = 0, daftaruser=2, jmlBuku, jmlpeminjam;
+int login, pengguna = 0, daftaruser=0, jmlBuku, indekPeminjaman = 0, indeksKembalian = 0;
 
-int hitungJumlahBuku(){
-	jmlBuku = 0;
-	for (int i = 0; i < 100; i++)
-	{
-		if (!buku[i][0].empty()) 
-		{
-			jmlBuku++;
-		}
-	}
-	return jmlBuku;
+string waktuSaatIni(){
+	    // Mendapatkan waktu saat ini
+    time_t now = time(0);  // Mendapatkan waktu dalam detik sejak epoch (1 Januari 1970)
+
+    // Mengonversi waktu ke format waktu lokal
+    tm *ltm = localtime(&now);
+
+    // Membuat buffer untuk menyimpan tanggal dalam format YYYY-MM-DD
+    char buffer[15];  // 10 karakter untuk tanggal + 1 untuk karakter null-terminator
+
+    // Mengisi buffer dengan tanggal dalam format YYYY-MM-DD
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d", ltm);
+
+    // Menampilkan tanggal
+	return buffer;
 }
 
-int hitungJumlahPeminjam(){
-	jmlpeminjam = 0;
-	for (int i = 0; i < 100; i++)
-	{
-		if (!user[i][0].empty())
-		{
-			jmlpeminjam++;
-		}
-	}
-	return jmlpeminjam;
+string jamSaatIni(){
+	    // Mendapatkan waktu saat ini
+    time_t now = time(0);  // Mendapatkan waktu dalam detik sejak epoch (1 Januari 1970)
+
+    // Mengonversi waktu ke format waktu lokal
+    tm *ltm = localtime(&now);
+
+    // Membuat buffer untuk menyimpan waktu dalam format HH-MM-SS
+    char buffer[15];  // 10 karakter untuk tanggal + 1 untuk karakter null-terminator
+
+    // Mengisi buffer dengan tanggal dalam format HH-MM-SS
+    strftime(buffer, sizeof(buffer), "%H:%M:%S", ltm);
+
+    // Menampilkan tanggal
+	return buffer;
 }
+
 
 void daftar(){
 	system("cls");
@@ -64,7 +78,7 @@ void daftar(){
         ulang = 'n';
 		cout << "Masukkan Password Bebas                  : ";
 		getline(cin,pass);
-		if (pass.length() > 8)
+		if (pass.length() > 4)
 		{
 			user[daftaruser][0] = nama;
 			user[daftaruser][1] = nim;
@@ -119,6 +133,11 @@ void pinjam(){
 						}
 						user[pengguna][indeksBuku] = buku[pilihan-1][0];
 						buku[pilihan-1][6] = "Dipinjam";
+						peminjaman[indekPeminjaman][0] = user[pengguna][1];
+						peminjaman[indekPeminjaman][1] = buku[pilihan-1][0];
+						peminjaman[indekPeminjaman][2] = waktuSaatIni();
+						peminjaman[indekPeminjaman][3] = jamSaatIni();
+						indekPeminjaman++;
 					} else {
 						cout << "Apakah anda ingin meminjam buku yang lain? y/n : ";
 						cin >> ulang;
@@ -169,7 +188,7 @@ void bacaBuku(){
 	{
 		bacaBukuLain = 'n';
 			system("cls");
-			cout << "Semua buku yang telah anda pinjam" << endl;
+			cout << "Semua buku yang telah anda pinjam" << endl << endl;
 			for (int i = 5; i < 8; i++)
 			{
 				if (!user[pengguna][i].empty())
@@ -251,6 +270,18 @@ void bacaBuku(){
 	} while (bacaBukuLain == 'y');
 }
 
+int hitungJumlahBuku(){
+	jmlBuku = 0;
+	for (int i = 0; i < 100; i++)
+	{
+		if (!buku[i][0].empty())
+		{
+			jmlBuku++;
+		}
+	}
+	return jmlBuku;
+}
+
 void cetakSemuaBuku(){
 	char kembali;
 	do
@@ -280,249 +311,71 @@ void cetakSemuaBuku(){
 }
 
 void kembalikanBuku(){
-	cout << "Daftar buku yang anda pinjam" << endl;
-	daftarPinjam();
-	
-}
-
-int hitungbuku(){
-	int count = 0;
-	for (int i = 0; i < maxBuku; i++)
-	{
-		if (buku[i][0] != "")
+	string bukuKembali;
+	int kmbBuku = 0, kmbBukuIndeks = 0;
+	bool ulangi = true, cek_kosong = 1;
+	char konfirm;
+	if(user[pengguna][5].empty()){
+		cout << "Anda tidak meminjam buku apapun silahkan kembali!" << endl;
+	} else {
+		cout << "Daftar buku yang anda pinjam" << endl;
+		daftarPinjam();
+		while (ulangi)
 		{
-			count++;
-		}
-		else{
-			break;
-		}
-	}
-	return count;
-}
-
-void ubahdatabuku(){
-    system("cls");
-	int jumlahbuku = hitungbuku();
-	string bukunew, penulisbaru, penerbitbaru, tahunterbitbaru, genrebaru, asalbaru;
-	char inginlihat, kondisi;
-	int ubahdata, nobuku, ketersediaan;
-    cout << "Data apa yang ingin anda ubah : \n";
-    cout << "1. Judul Buku \n"
-    << "2. Penulis\n"
-	<< "3. Penerbit\n"
-	<< "4. Tahun Terbit\n"
-	<< "5. Genre\n"
-	<< "6. Asal\n"
-	<< "7. Tambah daftar buku\n"
-	<< "8. Hapus Buku \n"
-	<< "Masukan nomor yang anda inginkan : ";cin >>ubahdata;
-
-    switch(ubahdata){
-		case 1 : 		 
-		cout << "Apakah anda ingin melihat daftar buku ? (y/n)\n" <<"pil : ";cin>>inginlihat;
-		cin.ignore();
-		if (inginlihat == 'y' || inginlihat == 'Y')
-		{
-			cetakSemuaBuku();
-			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
-			cout << "Apakah ini judul buku yang ingin anda ubah : "<<buku[nobuku-1][0];
-			cout << "\nJika ya tekan y ";cin>>kondisi;
-			cin.ignore();
-			if (kondisi == 'y' || kondisi == 'Y')
+			cout << "Pilih no berapa dari buku yang ingin anda kembalikan! (Isikan 1/2/3) : ";
+			cin >> kmbBuku;
+			if ((kmbBuku < 0)||(kmbBuku > 3))
 			{
-			cout <<	"Masukan judul buku baru yang ingin : ";getline(cin, bukunew);
-				buku[nobuku-1][0] = bukunew;
-			}
-			else{
-
+				ulangi = 1;
+				cout << "Masukkan pilihan hanya 1 sampai 3!!" << endl;
+			} else {
+				ulangi = 0;
 			}
 		}
-		break;
-
-		case 2 : 		 
-		cout << "Apakah anda ingin melihat daftar buku ? (y/n)\n" <<"pil : ";cin>>inginlihat;
-		if (inginlihat == 'y' || inginlihat == 'Y')
+		kmbBukuIndeks = kmbBuku + 4;
+		cout << "Apakah anda yakin ingin mengembalikan buku" << endl;
+		for (int i = 0; i < hitungJumlahBuku(); i++)
 		{
-			cetakSemuaBuku();
-			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
-			cout << "Apakah ini nama penulis buku yang ingin anda ubah : "<<buku[nobuku-1][1];
-			cout << "\nJika ya tekan y ";cin>>kondisi;
-			cin.ignore();
-			if (kondisi == 'y' || kondisi == 'Y')
+			if (buku[i][0] == user[pengguna][kmbBukuIndeks])
 			{
-			cout<< "Masukan Penulis buku baru yang ingin : ";getline(cin, penulisbaru);
-			buku[nobuku-1][1] = bukunew;
-			}
-			else{
-
-			}
-
-		}
-		break;
-
-		case 3: 		 
-		cout << "Apakah anda ingin melihat daftar buku ? (y/n)\n" <<"pil : ";cin>>inginlihat;
-		if (inginlihat == 'y' || inginlihat == 'Y')
-		{
-			cetakSemuaBuku();
-			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
-			cout << "Apakah ini nama penerbit buku yang ingin anda ubah : "<<buku[nobuku-1][2];
-			cout << "\nJika ya tekan y ";cin>>kondisi;
-			cin.ignore();
-			if (kondisi == 'y' || kondisi == 'Y')
-			{
-			cout<< "Masukan Penerbit buku baru yang ingin : ";getline(cin, penerbitbaru);
-			buku[nobuku-1][2] = bukunew;
-			}
-			else{
-
-			}
-
-		}
-		break;
-
-		case 4 : 		 
-		cout << "Apakah anda ingin melihat daftar buku ? (y/n)\n" <<"pil : ";cin>>inginlihat;
-		if (inginlihat == 'y' || inginlihat == 'Y')
-		{
-			cetakSemuaBuku();
-			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
-			cout << "Apakah ini tahun terbit buku yang ingin anda ubah : "<<buku[nobuku-1][3];
-			cout << "\nJika ya tekan y ";cin>>kondisi;
-			cin.ignore();
-			if (kondisi == 'y' || kondisi == 'Y')
-			{
-			cout<< "Masukan tahun terbit buku baru yang ingin : ";getline(cin, tahunterbitbaru);
-			buku[nobuku-1][3] = bukunew;
-			}
-			else{
-
-			}
-
-		}
-		break;
-
-		case 5 : 		 
-		cout << "Apakah anda ingin melihat daftar buku ? (y/n)\n" <<"pil : ";cin>>inginlihat;
-		if (inginlihat == 'y' || inginlihat == 'Y')
-		{
-			cetakSemuaBuku();
-			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
-			cout << "Apakah ini genre buku yang ingin anda ubah : "<<buku[nobuku-1][4];
-			cout << "\nJika ya tekan y ";cin>>kondisi;
-			cin.ignore();
-			if (kondisi == 'y' || kondisi == 'Y')
-			{
-			cout<< "Masukan genre buku baru yang ingin : ";getline(cin, genrebaru);
-			buku[nobuku-1][4] = bukunew;
-			}
-			else{
-
-			}
-
-		}
-		break;
-
-		case 6 : 		 
-		cout << "Apakah anda ingin melihat daftar buku ? (y/n)\n" <<"pil : ";cin>>inginlihat;
-		if (inginlihat == 'y' || inginlihat == 'Y')
-		{
-			cetakSemuaBuku();
-			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
-			cout << "Apakah ini asal buku yang ingin anda ubah : "<<buku[nobuku-1][5];
-			cout << "\nJika ya tekan y ";cin>>kondisi;
-			cin.ignore();
-			if (kondisi == 'y' || kondisi == 'Y')
-			{
-			cout<< "Masukan Asal buku baru yang ingin : ";getline(cin, asalbaru);
-			buku[nobuku-1][5] = bukunew;
-			}
-			else{
 				system("cls");
+				cout << "Judul        : " << buku[i][0] << endl;
+				bukuKembali = buku[i][0];
+				cout << "Penulis      : " << buku[i][1] << endl;
+				cout << "Penerbit     : " << buku[i][2] << endl;
+				cout << "Tahun terbit : " << buku[i][3] << endl;
+				cout << "Genre        : " << buku[i][4] << endl;
+				cout << "Asal         : " << buku[i][5] << endl;
+				break;
 			}
 		}
-		break;
-
-		case 7 :
-		system("cls");
-		if (jumlahbuku>=maxBuku )
+		cout << "Apakah anda ingin mengembalikan buku? y/n : ";
+		cin >> konfirm;
+		if (konfirm == 'y')
 		{
-			cout << "Rak anda penuh";
-		}
-		else{
-		cout << "Apakah anda ingin menambah daftar buku : "
-		<<"\nJika ya tekan y ";cin>>kondisi;
-		cin.ignore();
-		cin.ignore();
-		
-		if (kondisi == 'y' || kondisi == 'Y')
+			for (int i = 0; i < hitungJumlahBuku(); i++)
 			{
-			system("cls");
-			cout<< "Masukan judul buku baru yang ingin anda buat: ";getline(cin, bukunew);
-			buku[jumlahbuku][0] = bukunew;
-			
-			cout<< "\nMasukan Penulis buku baru yang ingin anda buat: ";getline(cin, penulisbaru);
-			buku[jumlahbuku][1] = penulisbaru;
-			
-			cout<< "\nMasukan Penerbit buku baru yang ingin anda buat: ";getline(cin, penerbitbaru);
-			buku[jumlahbuku][2] = penerbitbaru;
-			
-			cout<< "\nMasukan Tahun terbit buku baru yang ingin anda buat: ";getline(cin, tahunterbitbaru);
-			buku[jumlahbuku][3] = tahunterbitbaru;
-			
-			cout<< "\nMasukan Genre buku baru yang ingin anda buat: ";getline(cin, genrebaru);
-			buku[jumlahbuku][4] = genrebaru;
-			
-			cout<< "\nMasukan Asal buku baru yang ingin anda buat: ";getline(cin, asalbaru);
-			buku[jumlahbuku][5] = asalbaru;
-
-			cout<< "\nMasukan apakah buku tersedia(1) atau tidak(2) : ";cin>>ketersediaan;
-			if (ketersediaan = 1)
-			{
-				buku[jumlahbuku][6] = "Tersedia";
-			}
-			else if (ketersediaan = 2)
-			{
-				buku[jumlahbuku][6] = "Tidak Tersedia";
-			}
-			else{
-				cout << "Masukan yang benar ";
-			}
-			
-			nobuku++;
-			}
-			else{
-			
-			}
-
-		break;
-
-		case 8 :
-		cout << "Apakah anda ingin melihat daftar buku ? (y/n)\n" <<"pil : ";cin>>inginlihat;
-		if (inginlihat == 'y' || inginlihat == 'Y')
-		{
-			cetakSemuaBuku();
-			cout << "\nNo buku berapa yang ingin anda ubah : ";cin>>nobuku;
-			cout << "Apakah ini buku yang ingin anda hapus : "<<buku[nobuku-1][0];
-			cout << "\nJika ya tekan y ";cin>>kondisi;
-			cin.ignore();
-			if (kondisi == 'y' || kondisi == 'Y')
-			{
-				for (int i = 0; i < 9; i++)
+				if (buku[i][0] == user[pengguna][kmbBukuIndeks])
 				{
-					buku[nobuku-1][i] = "";
-				}
-				
+					buku[i][6] = "Tersedia";
+				}	
 			}
-			else{
-				system("cls");
+			for (int j = kmbBukuIndeks; j < 8; j++)
+			{
+				user[pengguna][j] = user[pengguna][j+1];
 			}
+			kembalianBu[indeksKembalian][0] = user[pengguna][1];
+			kembalianBu[indeksKembalian][1] = bukuKembali;
+			kembalianBu[indeksKembalian][2] = waktuSaatIni();
+			kembalianBu[indeksKembalian][3] = jamSaatIni();
+			indeksKembalian++;
 		}
-		break;
-		}
+		system("cls");
+		cout << "Daftar buku yang anda pinjam" << endl;
+		daftarPinjam();
 	}
 }
-	
+
 void tampiluser(){
 		system("cls");
 		cout << "Daftar User yang terdapat di Perpustakaan IF-C" << endl;
@@ -674,9 +527,110 @@ void hapususer(){
         } else {
             cout << "Nomor peminjam tidak valid!" << endl;
         }
-
         cout << "Tekan y untuk keluar : ";
         cin >> kembali;
     } while (kembali == 'n' || kembali == 'N');
 }
+
+void tampildatapinjam(){
+    system("cls");
+    cout << "Data Pinjam" << endl;
+    // Tampilkan pinjaman
+    cout << setw(100) << setfill('=') << "" << endl;
+    cout << setfill(' ');
+    cout << "| NO | NIM       |  Judul Buku                                             | Tanggal    | Tanggal   |" << endl;
+    cout << setw(100) << setfill('-') << "-" << endl;  
+    cout << setfill(' ');
+    for (int i = 0; i < indekPeminjaman; i++) {   
+        cout << "|" << setw(3) << setfill(' ') << i + 1 << " | "
+             << setw(9) << left << peminjaman[i][0] << " | "  // nim
+             << setw(55) << left << peminjaman[i][1] << " | " // judul buku
+             << setw(9) << left << peminjaman[i][2] << " | "  // Tanggal
+			 << setw(9) << left << peminjaman[i][3] << " | "  // Waktu
+             << endl;
+        cout << setw(100) << setfill('-') << "-" << endl;
+        cout << setfill(' ');
+    }
+	cout << "Data Kembali" << endl;
+    // Tampilkan kembalian
+    cout << setw(100) << setfill('=') << "" << endl;
+    cout << setfill(' ');
+    cout << "| NO | NIM       |  Judul Buku                                             | Tanggal    | Tanggal   |" << endl;
+    cout << setw(100) << setfill('-') << "-" << endl;  
+    cout << setfill(' ');
+    for (int i = 0; i < indeksKembalian; i++) {   
+        cout << "|" << setw(3) << setfill(' ') << i + 1 << " | "
+             << setw(9) << left << kembalianBu[i][0] << " | "  // nim
+             << setw(55) << left << kembalianBu[i][1] << " | " // judul buku
+             << setw(9) << left << kembalianBu[i][2] << " | "  // Tanggal
+			 << setw(9) << left << kembalianBu[i][3] << " | "  // Waktu
+             << endl;
+        cout << setw(100) << setfill('-') << "-" << endl;
+        cout << setfill(' ');
+    }
+}
+
+bool cekdata(string& utama, string& bagian){
+	int i,j;
+    int katautama = utama.length();
+    int katabagian = bagian.length();
+
+    if (katabagian > katautama){
+        return false;
+    }
+
+    for (i = 0; i <= katautama - katabagian; i++){
+        for (j = 0; j < katabagian; j++){
+            if (utama[i + j] != bagian[j]){
+                break;
+            }
+        }
+        if (j == katabagian) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void caridatapinjam(string& pencarian) {
+	char kembali;
+    bool ditemukan = false;
+	do{
+		for (int i = 0; i < indekPeminjaman; i++) {
+			if (cekdata(peminjaman[i][0], pencarian) || 
+				cekdata(peminjaman[i][1], pencarian) || 
+				cekdata(peminjaman[i][2], pencarian) || 
+				cekdata(peminjaman[i][3], pencarian)) {
+				cout << endl;
+				cout << "keterangan : Pinjam" << endl;
+				cout << "NIM        : " << peminjaman[i][0] << endl;
+				cout << "Nama Buku  : " << peminjaman[i][1] << endl;
+				cout << "Tanggal    : " << peminjaman[i][2] << endl;
+				cout << "Waktu      : " << peminjaman[i][3] << endl;
+				ditemukan = true;
+			}
+		}
+		for (int i = 0; i < indeksKembalian; i++) {
+			if (cekdata(kembalianBu[i][0], pencarian) || 
+				cekdata(kembalianBu[i][1], pencarian) || 
+				cekdata(kembalianBu[i][2], pencarian) || 
+				cekdata(kembalianBu[i][3], pencarian)) {
+				cout << endl;
+				cout << "keterangan : Kembali" << endl;
+				cout << "NIM        : " << kembalianBu[i][0] << endl;
+				cout << "Nama Buku  : " << kembalianBu[i][1] << endl;
+				cout << "Tanggal    : " << kembalianBu[i][2] << endl;
+				cout << "Waktu      : " << kembalianBu[i][3] << endl;
+				ditemukan = true;
+				}
+		}
+		if (!ditemukan) {
+			cout << "Data Peminjam dengan Kata Kunci " << pencarian << " tidak ditemukan." << endl;
+		}
+	cout << "Tekan y untuk keluar : ";
+    cin >> kembali;
+    }while (kembali == 'n' || kembali == 'N');
+}
+
+
 
