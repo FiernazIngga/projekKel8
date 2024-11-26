@@ -4,7 +4,7 @@
 #include <string>
 #include <cstring>
 #include <ctime>
-#define maxBuku 98
+#define maxBuku 100
 using namespace std;
 
 //string buku[buku][8] = {(0) judul, (1) penulis, (2) penerbit, (3) tahun terbit, (4) genre, (5) negara, (6) status, (7) isi}
