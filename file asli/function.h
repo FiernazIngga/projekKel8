@@ -72,7 +72,7 @@ void daftar(){
 	do
 	{
 		if (ulang == 'y') {
-            cout << "Isikan password minimal 8 karakter!!" << endl;
+            cout << "Isikan password minimal 5 karakter!!" << endl;
         }
         ulang = 'n';
 		cout << "Masukkan Password Bebas                  : ";
@@ -160,10 +160,14 @@ void pinjam(){
 void daftarPinjam(){
 	for (int i = 5; i < 8; i++)
 	{
-		if (!user[pengguna][i].empty())
+		for (int j = 0; j < maxBuku; j++)
 		{
-			cout << i - 4 << ". " << user[pengguna][i] << endl;
+			if (user[pengguna][i]==buku[j][0])
+			{
+				cout << i - 4 << ". " << user[pengguna][i] << endl;
+			}
 		}
+		
 	}
 }
 
@@ -293,7 +297,7 @@ void cetakSemuaBuku(){
 		cout << "NO |  Judul Buku                                             | Tahun   | Genre                | Negara        | Tersedia  |" << endl;
 		cout << setw(124) << setfill('-') << "-" << endl;  
 		cout << setfill(' ');
-		for (int i = 0; i < hitungJumlahBuku(); i++)
+		for (int i = 0; i < maxBuku; i++)
 		{      
 				cout <<setw(2)<<setfill(' ') << i + 1 << " | "
 							<< setw(55) << left << buku[i][0] << " | "
@@ -535,7 +539,7 @@ void hapususer(){
 
 void ubahdatabuku(){
     system("cls");
-	int jumlahbuku = hitungJumlahBuku();
+	int jumlahbuku = maxBuku;
 	string bukunew, penulisbaru, penerbitbaru, tahunterbitbaru, genrebaru, asalbaru;
 	char inginlihat, kondisi;
 	int ubahdata, nobuku, ketersediaan;
@@ -725,9 +729,6 @@ void ubahdatabuku(){
 			}
 			
 			nobuku++;
-			}
-			else{
-			
 			}
 
 		break;
