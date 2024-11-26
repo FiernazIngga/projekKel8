@@ -9,7 +9,7 @@ string peminjaman[data][4];
 string kembalianBu[data][4];
 string nama ,nim, fakultas, password, email, fakul, genreBuku, negaraBuku, pass;
 char ulang, kembali_anggota;
-int login, pengguna = 0, daftaruser=0, jmlBuku, indekPeminjaman = 0, indeksKembalian = 0;
+int login, pengguna = 0, daftaruser=0, indekPeminjaman = 0, indeksKembalian = 0;
 
 string waktuSaatIni(){
 	    // Mendapatkan waktu saat ini
@@ -270,7 +270,7 @@ void bacaBuku(){
 }
 
 int hitungJumlahBuku(){
-	jmlBuku = 0;
+	int jmlBuku = 0;
 	for (int i = 0; i < 100; i++)
 	{
 		if (!buku[i][0].empty())
@@ -293,7 +293,8 @@ void cetakSemuaBuku(){
 		cout << "NO |  Judul Buku                                             | Tahun   | Genre                | Negara        | Tersedia  |" << endl;
 		cout << setw(124) << setfill('-') << "-" << endl;  
 		cout << setfill(' ');
-		for (int i = 0; i < hitungJumlahBuku(); i++)
+		int jumlahbuku = hitungJumlahBuku();
+		for (int i = 0; i < jumlahbuku; i++)
 		{      
 				cout <<setw(2)<<setfill(' ') << i + 1 << " | "
 							<< setw(55) << left << buku[i][0] << " | "
